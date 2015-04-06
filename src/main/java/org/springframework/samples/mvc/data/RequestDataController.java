@@ -2,19 +2,16 @@ package org.springframework.samples.mvc.data;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.MatrixVariable;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
+
+import java.beans.PropertyEditorSupport;
 
 @Controller
 @RequestMapping("/data")
 public class RequestDataController {
+
+
 
 	@RequestMapping(value="param", method=RequestMethod.GET)
 	public @ResponseBody String withParam(@RequestParam String foo) {

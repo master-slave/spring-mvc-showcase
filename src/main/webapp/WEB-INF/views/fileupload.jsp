@@ -19,7 +19,7 @@
 		    See http://docs.spring.io/spring-security/site/docs/3.2.x/reference/htmlsingle/#csrf-multipart
 		-->
 		<c:url var="actionUrl" value="fileupload?${_csrf.parameterName}=${_csrf.token}"/>
-		<form id="fileuploadForm" action="${actionUrl}" method="POST" enctype="multipart/form-data" class="cleanform">
+		<form:form id="fileuploadForm" modelAttribute="ja" action="${actionUrl}" method="POST" enctype="multipart/form-data" class="cleanform">
 			<div class="header">
 		  		<h2>Form</h2>
 		  		<c:if test="${not empty message}">
@@ -28,8 +28,9 @@
 			</div>
 			<label for="file">File</label>
 			<input id="file" type="file" name="file" />
+            <input id="value" type="text" name="foo" />
 			<p><button type="submit">Upload</button></p>		
-		</form>
+		</form:form>
 		<script type="text/javascript">
 			$(document).ready(function() {
 				$('<input type="hidden" name="ajaxUpload" value="true" />').insertAfter($("#file"));

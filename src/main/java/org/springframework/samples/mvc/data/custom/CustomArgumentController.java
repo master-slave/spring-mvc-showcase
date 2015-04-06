@@ -15,10 +15,15 @@ public class CustomArgumentController {
 	void beforeInvokingHandlerMethod(HttpServletRequest request) {
 		request.setAttribute("foo", "bar");
 	}
-	
-	@RequestMapping(value="/data/custom", method=RequestMethod.GET)
-	public @ResponseBody String custom(@RequestAttribute("foo") String foo) {
-		return "Got 'foo' request attribute value '" + foo + "'";
-	}
+
+    @RequestMapping(value="/data/custom", method=RequestMethod.GET)
+    public @ResponseBody String custom(@RequestAttribute("foo") String foo) {
+        return "Got 'foo' request attribute value '" + foo + "'";
+    }
+
+    @RequestMapping(value="/data/customTest", method=RequestMethod.GET)
+    public @ResponseBody String customDefault(@TestDefaultValues({"foo","11/12/2014"}) Test foo) {
+        return "Got 'foo' request attribute value '" + foo.getName() + "'";
+    }
 
 }

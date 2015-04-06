@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.samples.mvc.data.custom.CustomArgumentController;
 import org.springframework.samples.mvc.data.custom.CustomArgumentResolver;
+import org.springframework.samples.mvc.data.custom.TestArgumentResolver;
 import org.springframework.test.web.servlet.MockMvc;
 
 public class CustomArgumentControllerTests {
@@ -16,7 +17,7 @@ public class CustomArgumentControllerTests {
 	@Before
 	public void setup() throws Exception {
 		this.mockMvc = standaloneSetup(new CustomArgumentController())
-				.setCustomArgumentResolvers(new CustomArgumentResolver()).build();
+				.setCustomArgumentResolvers(new CustomArgumentResolver(),new TestArgumentResolver()).build();
 	}
 
 	@Test
@@ -24,5 +25,11 @@ public class CustomArgumentControllerTests {
 		this.mockMvc.perform(get("/data/custom"))
 				.andExpect(content().string("Got 'foo' request attribute value 'bar'"));
 	}
+
+    @Test
+    public void paramCustom() throws Exception {
+        this.mockMvc.perform(get("/data/customTest"))
+                .andExpect(content().string("Got 'foo' request attribute value 'foo'"));
+    }
 
 }
