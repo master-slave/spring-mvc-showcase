@@ -5,6 +5,8 @@ import java.io.IOException;
 import org.springframework.mvc.extensions.ajax.AjaxUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,5 +31,15 @@ public class FileUploadController {
 	public void processUpload(@RequestParam MultipartFile file, Model model) throws IOException {
 		model.addAttribute("message", "File '" + file.getOriginalFilename() + "' uploaded successfully");
 	}
-	
+
+    @RequestMapping(value="/validate",method=RequestMethod.POST)
+    public void validateUpload( @Validated final MyModelAttribute myModelAttribute, final BindingResult result, final Model model) throws IOException {
+        if (result.hasErrors()) {
+            model.addAttribute("message", result.getFieldError().getDefaultMessage());
+        } else {
+            model.addAttribute("message", "File '" + myModelAttribute.getFile().getOriginalFilename() + "' uploaded successfully");
+        }
+    }
+
+
 }

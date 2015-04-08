@@ -16,11 +16,22 @@ public class FileUploadControllerTests extends AbstractContextControllerTests {
 	@Test
 	public void readString() throws Exception {
 
-		MockMultipartFile file = new MockMultipartFile("file", "orig", null, "bar".getBytes());
+		MockMultipartFile file = new MockMultipartFile("file", "orig", "application/pdf", "bar".getBytes());
+
 
 		webAppContextSetup(this.wac).build()
 				.perform(fileUpload("/fileupload").file(file))
 				.andExpect(model().attribute("message", "File 'orig' uploaded successfully"));
 	}
+
+    @Test
+    public void validateFileUpload() throws Exception {
+        MockMultipartFile file = new MockMultipartFile("file", "orig", "image/jpeg", "bar".getBytes());
+
+        webAppContextSetup(this.wac).build()
+                .perform(fileUpload("/fileupload/validate").file(file))
+                .andExpect(model().attribute("message", "content type not allowed"));
+    }
+
 
 }
