@@ -13,12 +13,6 @@ public class JavaBean {
 
 	private String fruit = "apple";
 
-    private Account account;
-
-
-    private Account accountId;
-
-
 	public String getFoo() {
 		return foo;
 	}
@@ -35,25 +29,8 @@ public class JavaBean {
 		this.fruit = fruit;
 	}
 
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
-
     @Override
 	public String toString() {
 		return "JavaBean {foo=[" + foo + "], fruit=[" + fruit + "]}";
 	}
-
-
-    public Account getAccountId() {
-        return accountId;
-    }
-
-    public void setAccountId(Account accountId) {
-        this.account = account;
-    }
 }
