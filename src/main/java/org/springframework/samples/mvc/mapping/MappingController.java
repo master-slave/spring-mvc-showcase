@@ -15,21 +15,6 @@ import java.util.Map;
 public class MappingController {
 
 
-    @InitBinder
-    public void initBinder(WebDataBinder binder) {
-        PropertyEditorSupport accountEditor = new PropertyEditorSupport() {
-
-            @Override
-            public void setAsText(String text) {
-                Account account = new Account();
-                account.setId(88l);
-                setValue(account);
-            }
-        };
-        binder.registerCustomEditor(Account.class,
-                accountEditor);
-    }
-
 	@RequestMapping("/mapping/path")
 	public @ResponseBody String byPath() {
 		return "Mapped by path!";
