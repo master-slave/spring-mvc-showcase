@@ -50,10 +50,15 @@ public class MappingController {
 		return "Mapped by path + method + absence of header!";
 	}
 
-	@RequestMapping(value="/mapping/consumes", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody String byConsumes(@RequestBody JavaBean javaBean) {
-		return "Mapped by path + method + consumable media type (javaBean '" + javaBean + "')";
-	}
+    @RequestMapping(value="/mapping/consumes", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody String byConsumes(@RequestBody JavaBean javaBean) {
+        return "Mapped by path + method + consumable media type (javaBean '" + javaBean + "')";
+    }
+
+    @RequestMapping(value="/mapping/dateConversion", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody JavaBean dateConversionCustomSerializer(@RequestBody JavaBean javaBean) {
+        return javaBean;
+    }
 
 	@RequestMapping(value="/mapping/produces", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody JavaBean byProducesJson() {

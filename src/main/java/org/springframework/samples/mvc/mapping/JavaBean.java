@@ -2,6 +2,7 @@ package org.springframework.samples.mvc.mapping;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -16,7 +17,7 @@ public class JavaBean {
 
 	private String fruit = "apple";
 
-
+    @JsonSerialize(using = YourDateSerializer.class)
     @JsonDeserialize(using = YourDateDeserializer.class)
     private Date date;
 

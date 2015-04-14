@@ -9,6 +9,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.startsWith;
+import static org.hamcrest.core.Is.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -66,16 +67,25 @@ public class MappingControllerTests extends AbstractContextControllerTests {
                 .andExpect(content().string("Mapped by path + method + absence of header!"));
     }
 
-    //http://stackoverflow.com/questions/29622390/passing-date-as-json-object-through-spring-hibernate/29622489#29622489
-    // http://stackoverflow.com/questions/25646564/unable-to-convert-string-to-date-by-requestbody-in-spring
     @Test
     public void byConsumes() throws Exception {
         this.mockMvc.perform(
                 post("/mapping/consumes")
                         .contentType(MediaType.APPLICATION_JSON)
+                        .content("{ \"foo\": \"bar\", \"fruit\": \"apple\" }".getBytes()))
+                .andExpect(content().string(startsWith("Mapped by path + method + consumable media type (javaBean")));
+    }
+
+    //http://stackoverflow.com/questions/29622390/passing-date-as-json-object-through-spring-hibernate/29622489#29622489
+    // http://stackoverflow.com/questions/25646564/unable-to-convert-string-to-date-by-requestbody-in-spring
+    @Test
+    public void byDateConversions() throws Exception {
+        this.mockMvc.perform(
+                post("/mapping/dateConversion")
+                        .contentType(MediaType.APPLICATION_JSON)
                         .content("{ \"foo\": \"bar\", \"fruit\": \"apple\", \"date\": \"a20140202\" }".getBytes()))
                 .andDo(print())
-                .andExpect(content().string(startsWith("Mapped by path + method + consumable media type (javaBean")));
+                .andExpect(jsonPath("$.date", is("a20140202")));
     }
 
     @Test
