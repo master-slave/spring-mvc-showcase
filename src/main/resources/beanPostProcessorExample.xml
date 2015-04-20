@@ -1,0 +1,11 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+    <bean id="life" class="org.springframework.core.Life" init-method="init"
+          destroy-method="_destroy">
+        <property name="counter" value="1" />
+    </bean>
+    <bean id="custom" class="org.springframework.core.CustomBeanPostProcessor"/>
+    <bean id="holder" class="java.lang.String" />
+</beans>
