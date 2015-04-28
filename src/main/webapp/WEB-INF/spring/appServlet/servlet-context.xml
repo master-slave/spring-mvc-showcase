@@ -8,7 +8,7 @@
 		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven conversion-service="conversionService" enable-matrix-variables="true">
@@ -21,19 +21,15 @@
 				<beans:bean class="org.springframework.samples.mvc.async.TimeoutCallableProcessingInterceptor" />
 			</callable-interceptors>
 		</async-support>
-      <!--
-         http://stackoverflow.com/questions/29538962/springmvc-myproject-home-any-symbols-acts-like-myproject-home
-         http://stackoverflow.com/questions/10887409/how-do-i-restrict-route-extensions-in-requestmapping-paths-for-spring-mvc-contr
-         <path-matching suffix-pattern="true"  trailing-slash="true"  registered-suffixes-only="false"/>
-           -->
+<!--        <message-converters register-defaults="true">
+             <beans:bean
+                    class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <beans:property name="objectMapper">
+                    <beans:bean class="org.springframework.samples.mvc.mapper.CustomObjectMapper"/>
+                </beans:property>
+            </beans:bean>
+        </message-converters>-->
 	</annotation-driven>
-
-   <!--
-    to disable favouring by path extension, we should uncomment and add an attribute to annotation driven content-negotiation-manager="contentNegotiationManager"
-    <beans:bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
-        <beans:property name="favorPathExtension" value="false" />
-    </beans:bean>
-    -->
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources/ directory -->
 	<resources mapping="/resources/**" location="/resources/" />

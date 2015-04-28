@@ -1,17 +1,25 @@
 package org.springframework.samples.mvc.mapping;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.beans.Transient;
+import java.util.Date;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIgnoreProperties(ignoreUnknown = true)
 @XmlRootElement
 public class JavaBean {
 
 	private String foo = "bar";
 
 	private String fruit = "apple";
+
+    @JsonSerialize(using = YourDateSerializer.class)
+    @JsonDeserialize(using = YourDateDeserializer.class)
+    private Date date;
 
 	public String getFoo() {
 		return foo;
@@ -29,8 +37,18 @@ public class JavaBean {
 		this.fruit = fruit;
 	}
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
     @Override
 	public String toString() {
-		return "JavaBean {foo=[" + foo + "], fruit=[" + fruit + "]}";
+		return "JavaBean {foo=[" + foo + "], fruit=[" + fruit + "], date=[" + date +"]}";
 	}
+
+
 }
