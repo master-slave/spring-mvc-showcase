@@ -3,12 +3,16 @@ package org.springframework.samples.mvc.mapping;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import java.beans.PropertyEditorSupport;
+import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 
 @Controller
@@ -74,6 +78,16 @@ public class MappingController {
     public @ResponseBody String map(@RequestParam Map<String, Object> model) {
         model.put("test","test");
         return "map";
+    }
+
+    @RequestMapping("/image/{personId}")
+    @ResponseBody
+    public HttpEntity<byte[]> getPhoto(@PathVariable String personId) throws IOException {
+        byte[] image = org.apache.commons.io.FileUtils.readFileToByteArray(new File("C:\\Users\\Public\\Pictures\\Sample Pictures" + File.separator + personId + ".jpg"));
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_PNG);
+        headers.setContentLength(image.length);
+        return new HttpEntity<byte[]>(image, headers);
     }
 
 }
