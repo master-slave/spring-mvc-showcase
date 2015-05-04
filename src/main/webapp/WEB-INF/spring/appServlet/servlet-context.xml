@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+<beans xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:beans="http://www.springframework.org/schema/beans"
+    xmlns="http://www.springframework.org/schema/beans"
 	xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
@@ -9,26 +9,26 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
-	
+
 	<!-- Enables the Spring MVC @Controller programming model -->
-	<annotation-driven conversion-service="conversionService" enable-matrix-variables="true">
-		<argument-resolvers>
-			<beans:bean class="org.springframework.samples.mvc.data.custom.CustomArgumentResolver"/>
-			<beans:bean class="org.springframework.samples.mvc.data.custom.TestArgumentResolver"/>
-		</argument-resolvers>
-		<async-support default-timeout="3000">
-			<callable-interceptors>
-				<beans:bean class="org.springframework.samples.mvc.async.TimeoutCallableProcessingInterceptor" />
-			</callable-interceptors>
-		</async-support>
+	<mvc:annotation-driven conversion-service="conversionService" enable-matrix-variables="true" >
+		<mvc:argument-resolvers>
+			<bean class="org.springframework.samples.mvc.data.custom.CustomArgumentResolver"/>
+			<bean class="org.springframework.samples.mvc.data.custom.TestArgumentResolver"/>
+		</mvc:argument-resolvers>
+		<mvc:async-support default-timeout="3000">
+			<mvc:callable-interceptors>
+				<bean class="org.springframework.samples.mvc.async.TimeoutCallableProcessingInterceptor" />
+			</mvc:callable-interceptors>
+		</mvc:async-support>
 <!--
        <message-converters register-defaults="true">
-            <beans:bean
+            <bean
                     class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-                <beans:property name="objectMapper">
-                    <beans:bean class="org.springframework.samples.mvc.mapper.CustomObjectMapper"/>
-                </beans:property>
-            </beans:bean>
+                <property name="objectMapper">
+                    <bean class="org.springframework.samples.mvc.mapper.CustomObjectMapper"/>
+                </property>
+            </bean>
         </message-converters>
 
          http://stackoverflow.com/questions/29965675/how-to-configure-spring-mvc-dispatcherservlet-to-avoid-urls-with-extensions/29965832#29965832
@@ -44,31 +44,61 @@
         <bean id="pathHelper" class="org.example.app.MyPathHelper" />
         <bean id="pathMatcher" class="org.example.app.MyPathMatcher" />
             -->
-	</annotation-driven>
+	</mvc:annotation-driven>
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources/ directory -->
-	<resources mapping="/resources/**" location="/resources/" />
-	<resources mapping="/home.html" location="/WEB-INF/views/" />
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+	<mvc:resources mapping="/home.html" location="/WEB-INF/views/" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
-	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<beans:property name="prefix" value="/WEB-INF/views/" />
-		<beans:property name="suffix" value=".jsp" />
-	</beans:bean>
-	
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+<!--
+add content-negotiation-manager="cnManager" to annotation driven
+
+https://spring.io/blog/2013/06/03/content-negotiation-using-views
+http://websystique.com/springmvc/spring-4-mvc-contentnegotiatingviewresolver-example/
+
+    &lt;!&ndash;
+        View resolver that delegates to other view resolvers based on the content type
+    &ndash;&gt;
+    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+        &lt;!&ndash; All configuration is now done by the manager - since Spring V3.2 &ndash;&gt;
+        <property name="contentNegotiationManager" ref="cnManager"/>
+    </bean>
+
+    &lt;!&ndash;
+        Setup a simple strategy:
+           1. Only path extension is taken into account, Accept headers are ignored.
+           2. Return HTML by default when not sure.
+     &ndash;&gt;
+    <bean id="cnManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+        <property name="ignoreAcceptHeader" value="true"/>
+        <property name="defaultContentType" value="text/html" />
+    </bean>
+    &lt;!&ndash; Maps to a bean called "accounts/list" in "spreadsheet-views.xml" &ndash;&gt;
+    <bean class="org.springframework.samples.mvc.views.JsonViewResolver"/>
+    <bean class="org.springframework.samples.mvc.views.Jaxb2MarshallingXmlViewResolver"/>
+    <bean class="org.springframework.samples.mvc.views.PdfViewResolver"/>
+    <bean class="org.springframework.samples.mvc.views.ExcelViewResolver"/>
+
+-->
 	<!-- Only needed because we install custom converters to support the examples in the org.springframewok.samples.mvc.convert package -->
-	<beans:bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
-		<beans:property name="formatters">
-            <beans:bean class="org.springframework.samples.mvc.convert.MaskFormatAnnotationFormatterFactory" />
-		</beans:property>
-	</beans:bean>
+	<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+		<property name="formatters">
+            <bean class="org.springframework.samples.mvc.convert.MaskFormatAnnotationFormatterFactory" />
+		</property>
+	</bean>
 
 	<!-- Only needed because we require fileupload in the org.springframework.samples.mvc.fileupload package -->
-	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
 
 	<!-- Imports user-defined @Controller beans that process client requests -->
-	<beans:import resource="controllers.xml" />
+	<import resource="controllers.xml" />
 
 	<task:annotation-driven />
-	
-</beans:beans>
+
+</beans>
