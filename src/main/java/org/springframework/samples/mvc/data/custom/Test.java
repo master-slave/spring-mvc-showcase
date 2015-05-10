@@ -5,6 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
 public class Test {
+    @ParamName("new_kiosk")
     private String name;
     private Date date;
 

@@ -11,16 +11,18 @@
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 
 	<!-- Enables the Spring MVC @Controller programming model -->
-	<mvc:annotation-driven conversion-service="conversionService" enable-matrix-variables="true" >
+	<mvc:annotation-driven conversion-service="conversionService" enable-matrix-variables="true">
 		<mvc:argument-resolvers>
 			<bean class="org.springframework.samples.mvc.data.custom.CustomArgumentResolver"/>
 			<bean class="org.springframework.samples.mvc.data.custom.TestArgumentResolver"/>
+			<bean class="org.springframework.samples.mvc.data.custom.RenamingProcessor"/>
 		</mvc:argument-resolvers>
 		<mvc:async-support default-timeout="3000">
 			<mvc:callable-interceptors>
 				<bean class="org.springframework.samples.mvc.async.TimeoutCallableProcessingInterceptor" />
 			</mvc:callable-interceptors>
 		</mvc:async-support>
+
 <!--
        <message-converters register-defaults="true">
             <bean

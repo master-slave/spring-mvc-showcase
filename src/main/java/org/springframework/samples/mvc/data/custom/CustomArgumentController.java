@@ -26,4 +26,9 @@ public class CustomArgumentController {
         return "Got 'foo' request attribute value '" + foo.getName() + "'";
     }
 
+    @RequestMapping(value="/data/rename", method=RequestMethod.GET)
+    public @ResponseBody String renaming(Test foo) {
+        return "Got 'foo' request attribute value '" + foo.getName() + "'";
+    }
+
 }

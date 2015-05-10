@@ -5,9 +5,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.samples.mvc.data.custom.CustomArgumentController;
 import org.springframework.samples.mvc.data.custom.CustomArgumentResolver;
+import org.springframework.samples.mvc.data.custom.RenamingProcessor;
 import org.springframework.samples.mvc.data.custom.TestArgumentResolver;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -17,7 +19,7 @@ public class CustomArgumentControllerTests {
 	@Before
 	public void setup() throws Exception {
 		this.mockMvc = standaloneSetup(new CustomArgumentController())
-				.setCustomArgumentResolvers(new CustomArgumentResolver(),new TestArgumentResolver()).build();
+				.setCustomArgumentResolvers(new CustomArgumentResolver(),new TestArgumentResolver(), new RenamingProcessor(true)).build();
 	}
 
 	@Test
@@ -32,4 +34,10 @@ public class CustomArgumentControllerTests {
                 .andExpect(content().string("Got 'foo' request attribute value 'foo'"));
     }
 
+    @Ignore// http://stackoverflow.com/questions/8986593/how-to-customize-parameter-names-when-binding-spring-mvc-command-objects
+    @Test
+    public void paramRenaming() throws Exception {
+        this.mockMvc.perform(get("/data/rename"))
+                .andExpect(content().string("Got 'foo' request attribute value 'bar'"));
+    }
 }
