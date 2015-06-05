@@ -80,6 +80,26 @@ public class MappingController {
         return "map";
     }
 
+    @RequestMapping(value="/mapping/requestBody", method=RequestMethod.POST)
+    public @ResponseBody String requestBody(@RequestBody String email) {
+        return "{\"data\": \"" + email + "\"}";
+    }
+
+    @RequestMapping(value="/mapping/requestBody", method=RequestMethod.GET)
+    public @ResponseBody String requestBodyGet(@RequestBody String email) {
+        return "{\"data\": \"" + email + "\"}";
+    }
+
+    @RequestMapping(value="/mapping/requestParam", method=RequestMethod.POST)
+    public @ResponseBody String requestParam(@RequestParam String email) {
+        return "{\"data\": \"" + email + "\"}";
+    }
+
+    @RequestMapping(value="/mapping/requestParam", method=RequestMethod.GET)
+    public @ResponseBody String requestParamGET(@RequestParam String email) {
+        return "{\"data\": \"" + email + "\"}";
+    }
+
     @RequestMapping("/image/{personId}")
     @ResponseBody
     public HttpEntity<byte[]> getPhoto(@PathVariable String personId) throws IOException {

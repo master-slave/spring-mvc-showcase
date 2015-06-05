@@ -1,14 +1,14 @@
-Checking daily for quality accepted answers, listing the interesting ones here
+# Checking daily for quality accepted answers, listing the interesting ones here
 
 SO query: [spring-mvc] hasaccepted:yes
 SO link: http://stackoverflow.com/search?tab=newest&q=%5bspring-mvc%5d%20hasaccepted%3ayes
 
-## 2015-06-04
+# 2015-06-04
 
-# Link
+## Link
 http://stackoverflow.com/questions/30639842/how-exactly-are-the-root-context-and-the-dispatcher-servlet-context-into-a-sprin
 
-# Question
+## Question
 I am studying **Spring MVC** and I have some doubt related
 
 So, I have this configuration class that configure my **DispatcherServlet** that handle the user requests:
@@ -42,7 +42,7 @@ It is pretty clear for me how the **DispatcherServlet** works. My doubts are rel
 
 Tnx
 
-# Answer
+## Answer
 
 Root Context
 ---
@@ -154,70 +154,6 @@ If you really want to add a success message to the model, use `RedirectAttribute
 		}
 		return "blog"
 	}
-
-##Link
-http://stackoverflow.com/questions/30636039/uncaught-syntaxerror-unexpected-token-d
-##Question
-Hi i'm sending a integer array to my spring mvc controller method.When it is passed the data is getting to controller and functionality is working good.
-But after the function the controller will send some response to client side, on client side the response data goes to error function and showing
-
-
-    Uncaught SyntaxError: Unexpected token d
-
-
-
-    $.ajax({
-        			type : 'GET',
-        			dataType : 'json',
-        			url : 'deleteTeacherSelectedNotes.html',
-        			data : ({
-        				notes : JSON.stringify(noteArray)
-        			}),
-        			success : function(responseData) {
-        				stopPreloader();
-        						      	},
-        		      	error: function (response) {
-        		            var r = jQuery.parseJSON(response.responseText);
-        		            console.log("Message: " + r.Message);
-        		            console.log("StackTrace: " + r.StackTrace);
-        		            console.log("ExceptionType: " + r.ExceptionType);
-        		      }
-        		    });
-
-
-
-
-
-        @RequestMapping(value = "/deleteTeacherSelectedNotes.html", method =  RequestMethod.GET)
-            	@ResponseBody
-            	public boolean deleteTeacherSelectedNotes(@RequestParam("notes")String notes) throws JSONException{
-            		JSONArray arrJson = new JSONArray(notes);
-            		for (int i = 0; i < arrJson.length(); i++) {
-            			String x = arrJson.getString(i);
-            			noteService.deleteNote(Integer.parseInt(x));
-            		}
-            		return false;
-            	}
-##Answer
-Try Changing data type to JSON
-
-    $.ajax({
-                    type : 'GET',
-                    dataType : 'JSON',
-                    url : 'deleteTeacherSelectedNotes.html',
-                    data : ({
-                        notes : JSON.stringify(noteArray)
-                    }),
-                    success : function(responseData) {
-                        stopPreloader();
-                                        },
-                        error: function (response) {
-                            var r = jQuery.parseJSON(response.responseText);
-                            console.log("Message: " + r.Message);
-                            console.log("StackTrace: " + r.StackTrace);
-                            console.log("ExceptionType: " + r.ExceptionType);
-                      }
-                    });
 
 ## Link
 http://stackoverflow.com/questions/30627853/spring-boot-setting-up-message-properties-and-errors-properties-file-in-the-proj
