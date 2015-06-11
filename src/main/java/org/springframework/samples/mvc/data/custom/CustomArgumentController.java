@@ -21,6 +21,12 @@ public class CustomArgumentController {
         return "Got 'foo' request attribute value '" + foo + "'";
     }
 
+
+    @RequestMapping(value="/data/uppercase", method=RequestMethod.GET)
+    public @ResponseBody String upperCase(@UpperCase("upperCase") String foo) {
+        return "Got 'foo' request attribute value '" + foo + "'";
+    }
+
     @RequestMapping(value="/data/customTest", method=RequestMethod.GET)
     public @ResponseBody String customDefault(@TestDefaultValues({"foo","11/12/2014"}) Test foo) {
         return "Got 'foo' request attribute value '" + foo.getName() + "'";

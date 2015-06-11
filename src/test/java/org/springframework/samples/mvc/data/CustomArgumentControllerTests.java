@@ -7,10 +7,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standal
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.springframework.samples.mvc.data.custom.CustomArgumentController;
-import org.springframework.samples.mvc.data.custom.CustomArgumentResolver;
-import org.springframework.samples.mvc.data.custom.RenamingProcessor;
-import org.springframework.samples.mvc.data.custom.TestArgumentResolver;
+import org.springframework.samples.mvc.data.custom.*;
 import org.springframework.test.web.servlet.MockMvc;
 
 public class CustomArgumentControllerTests {
@@ -19,7 +16,7 @@ public class CustomArgumentControllerTests {
 	@Before
 	public void setup() throws Exception {
 		this.mockMvc = standaloneSetup(new CustomArgumentController())
-				.setCustomArgumentResolvers(new CustomArgumentResolver(),new TestArgumentResolver(), new RenamingProcessor(true)).build();
+				.setCustomArgumentResolvers(new UpperCaseResolver(), new CustomArgumentResolver(),new TestArgumentResolver(), new RenamingProcessor(true)).build();
 	}
 
 	@Test
@@ -27,6 +24,13 @@ public class CustomArgumentControllerTests {
 		this.mockMvc.perform(get("/data/custom"))
 				.andExpect(content().string("Got 'foo' request attribute value 'bar'"));
 	}
+
+    // http://stackoverflow.com/questions/30715579/custom-spring-annotation-for-request-parameters/30716094#30716094
+    @Test
+    public void upperCaseParam() throws Exception {
+        this.mockMvc.perform(get("/data/uppercase?upperCase=bar"))
+                .andExpect(content().string("Got 'foo' request attribute value 'BAR'"));
+    }
 
     @Test
     public void paramCustom() throws Exception {
