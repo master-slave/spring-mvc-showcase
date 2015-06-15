@@ -37,6 +37,19 @@ public class MappingControllerTests extends AbstractContextControllerTests {
                 .andExpect(content().string("Mapped by path pattern ('/mapping/path/wildcard')"));
     }
 
+    // Optional path variable http://stackoverflow.com/a/29038120/1000933 quite nice
+    @Test
+    public void byPathPatternOptional() throws Exception {
+        this.mockMvc.perform(get("/mapping/optional"))
+                .andExpect(content().string("success"));
+
+        this.mockMvc.perform(get("/mapping/optional/test"))
+                .andExpect(content().string("success test"));
+
+        this.mockMvc.perform(get("/mapping/optional/test/test2"))
+                .andExpect(content().string("success test test2"));
+    }
+
     @Test
     public void byMethod() throws Exception {
         this.mockMvc.perform(get("/mapping/method"))

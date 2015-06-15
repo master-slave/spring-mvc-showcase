@@ -1,1 +1,0 @@
-Optional path variable http://stackoverflow.com/a/29038120/1000933 write text
